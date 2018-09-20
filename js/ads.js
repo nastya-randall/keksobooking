@@ -47,8 +47,8 @@
   window.ads = [];
 
   var ADS_NUMBER = 8;
-  var MIN_PRICE = 1000;
-  var MAX_PRICE = 1000000;
+  var MIN_PRICE = 100;
+  var MAX_PRICE = 2000;
   var MIN_ROOMS = 1;
   var MAX_ROOMS = 5;
 

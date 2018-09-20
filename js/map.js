@@ -2,16 +2,12 @@
 
 (function () {
 
-  var ADS_NUMBER = 8;
   var MIN_Y = 130;
   var MAX_Y = 630;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var USER_PIN_WIDTH = 65;
   var USER_PIN_HEIGHT = 81;
-//  var INITIAL_PIN_COUNT = 5;
-//  var ERROR_TIMEOUT_INTERVAL = 5000;
-//  var ads = [];
 
   var map = document.querySelector('.map');
 
@@ -70,36 +66,12 @@
     return pinElement;
   };
 
-//  var onLoad = function (data) {
-//    ads = data;
-//    insertPins(ads);
-//    window.utils.disable(false, filters);
-//  };
-//
-//  var onError = function (errorMessage) {
-//    var node = document.createElement('div');
-//    node.style.zIndex = 100;
-//    node.style.color = '#ff6d51';
-//    node.style.position = 'absolute';
-//    node.style.left = '42%';
-//    node.style.top = '100px';
-//    node.style.fontSize = '22px';
-//
-//    node.textContent = errorMessage;
-//    pinsContainer.insertAdjacentElement('afterbegin', node);
-//
-//    setTimeout(function () {
-//      pinsContainer.removeChild(node);
-//    }, ERROR_TIMEOUT_INTERVAL);
-//  };
-
 
   // inserting pins
 
   var insertPins = function (array) {
-//    var arrayLength = Math.min(array.length, INITIAL_PIN_COUNT);
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < ADS_NUMBER; i++) {
+    for (var i = 0; i < array.length; i++) {
       fragment.appendChild(renderPin(array[i]));
     }
     pinsContainer.appendChild(fragment);
@@ -124,7 +96,6 @@
     window.utils.disable(false, filters);
   };
 
-  console.log(window.ads);
   userPin.addEventListener('mouseup', activateSite);
 
   // DRAGGING THE USER PIN
@@ -182,6 +153,10 @@
   // обновление меток
 
   var updatePins = function () {
+    var similarAds = window.ads.filter(function (it) {
+      return window.filters.checkType(it) && window.filters.checkPrice(it) && window.filters.checkRooms(it) && window.filters.checkGuests(it);
+    });
+
     var checkFeatures = function () {
       var selectedFeatures = map.querySelectorAll('input:checked');
       for (var i = 0; i < selectedFeatures.length; i++) {
@@ -192,9 +167,6 @@
       return similarAds;
     };
 
-    var similarAds = ads.filter(function (it) {
-      return window.filters.checkType(it) && window.filters.checkPrice(it) && window.filters.checkRooms(it) && window.filters.checkGuests(it);
-    });
     checkFeatures();
 
     removePins();
